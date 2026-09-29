@@ -1,0 +1,76 @@
+# OfflineMind - Model Configuration
+# Configured for Snapdragon HP PCs (Windows on ARM) with automatic CPU fallback.
+
+system:
+  target_device: "Snapdragon X Elite / Snapdragon X Plus"
+  os: "Windows 11 on ARM64"
+  preferred_execution_provider: "QNNExecutionProvider" # Qualcomm Neural Processing Unit (NPU)
+  fallback_execution_provider: "CPUExecutionProvider"
+
+speech_to_text:
+  # Selected model configuration
+  active_model: "whisper_base_en"
+  language: "en"
+  sampling_rate: 16000
+
+  # Available verified model options
+  models:
+    whisper_base_en:
+      source: "Qualcomm AI Hub / HuggingFace"
+      qai_hub_id: "whisper_base_en"
+      hf_model_id: "openai/whisper-base.en"
+      quantization: "w8a16" # 8-bit weights, 16-bit activations (optimal for Hexagon NPU)
+      context_length: 30 # seconds per chunk
+      description: "Fast, accurate English transcription optimized for Hexagon NPU."
+    
+    whisper_small_en:
+      source: "Qualcomm AI Hub / HuggingFace"
+      qai_hub_id: "whisper_small_en"
+      hf_model_id: "openai/whisper-small.en"
+      quantization: "w8a16"
+      context_length: 30
+      description: "Higher accuracy for dense technical lectures or meetings."
+
+    whisper_tiny_en:
+      source: "Qualcomm AI Hub / HuggingFace"
+      qai_hub_id: "whisper_tiny_en"
+      hf_model_id: "openai/whisper-tiny.en"
+      quantization: "fp16"
+      context_length: 30
+      description: "Ultra-lightweight model with lowest latency and minimal memory footprint."
+
+summarization:
+  # Selected compact LLM model
+  active_model: "llama_3_2_1b"
+  max_input_tokens: 2048
+  max_new_tokens: 512
+  temperature: 0.3 # Low temperature for factual summarization & action item extraction
+
+  # Available verified compact LLM options
+  models:
+    llama_3_2_1b:
+      source: "Qualcomm AI Hub / Meta"
+      qai_hub_id: "llama_v3_2_1b_instruct"
+      hf_model_id: "meta-llama/Llama-3.2-1B-Instruct"
+      quantization: "w4a16" # 4-bit weights, 16-bit activations (standard NPU deployment)
+      description: "Compact 1B parameter model with excellent instruction-following on NPU."
+
+    smollm2_135m:
+      source: "Qualcomm AI Hub / Hugging Face"
+      qai_hub_id: "smollm_135m_instruct"
+      hf_model_id: "HuggingFaceTB/SmolLM2-135M-Instruct"
+      quantization: "fp16"
+      description: "Ultra-compact model (~135M parameters) for instantaneous local notes extraction."
+
+    phi_3_5_mini:
+      source: "Qualcomm AI Hub / Microsoft"
+      qai_hub_id: "phi_3_5_mini_instruct"
+      hf_model_id: "microsoft/Phi-3.5-mini-instruct"
+      quantization: "w4a16"
+      description: "High-reasoning 3.8B model for detailed synthesis and long lectures."
+
+# Storage paths
+paths:
+  weights_dir: "models/weights"
+  notes_dir: "storage/notes_data"
+  db_path: "storage/notes_data/offlinemind.db"

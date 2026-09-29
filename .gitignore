@@ -1,0 +1,53 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Models & Weights (Keep git repo light)
+models/weights/
+models/downloaded/
+*.onnx
+*.onnx_data
+*.bin
+*.dlc
+*.safetensors
+*.pt
+*.gguf
+
+# Audio and User Recordings
+audio_cache/
+recordings/
+temp/
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.ogg
+
+# User Notes and Local Database (Private user data)
+storage/notes_data/
+*.sqlite
+*.sqlite3
+*.db
+exports/*.pdf
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+.streamlit/secrets.toml

@@ -1,0 +1,1 @@
+# OfflineMind models package
